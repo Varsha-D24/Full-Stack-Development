@@ -1,0 +1,7 @@
+Docker Deployment:
+
+Follow the instructions in the Dockerfile and docker-compose.yml files to deploy the app in a containerized environment.
+Kubernetes Deployment:
+
+Use the app-deployment.yaml file for deploying on a Kubernetes cluster.
+Instructions for setting up Kubernetes with Minikube or a cloud provider (e.g., AWS EKS) are in Deployment Guide.
