@@ -1,0 +1,13 @@
+from langchain.document_loaders import DocumentLoader
+from langchain.embeddings import LangChainEmbeddings
+
+def index_document(content):
+    loader = DocumentLoader()
+    embeddings = LangChainEmbeddings()
+    index = embeddings.index(content)
+    return index
+@router.post("/query/")
+async def query_document(query: str, db: Session = Depends(get_db)):
+    # Perform the NLP query on indexed documents
+    response = query_with_rag_agent(query)
+    return {"response": response}
