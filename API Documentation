@@ -1,0 +1,7 @@
+Authentication
+POST /register - Register a new user.
+POST /login - User login to create a session.
+Document Management
+POST /upload - Upload a document.
+POST /query - Query a document using NLP.
+See API Documentation for more details.
