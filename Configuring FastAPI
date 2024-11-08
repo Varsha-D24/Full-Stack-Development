@@ -1,0 +1,18 @@
+from fastapi import FastAPI
+from app.database import engine
+from app.models import Base
+from app.routers import document, user, auth
+
+# Initialize database tables
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI()
+
+# Include routers for different modules
+app.include_router(document.router)
+app.include_router(user.router)
+app.include_router(auth.router)
+
+@app.get("/")
+async def root():
+    return {"message": "Document Management System"}
