@@ -1,0 +1,12 @@
+from fastapi import APIRouter, UploadFile, Depends
+from app.utils import upload_file_to_s3
+from sqlalchemy.orm import Session
+from app.database import get_db
+
+router = APIRouter()
+
+@router.post("/upload/")
+async def upload_document(file: UploadFile, db: Session = Depends(get_db)):
+    file_url = upload_file_to_s3(file, file.filename)
+    # Create document entry in DB
+    return {"file_url": file_url}
