@@ -1,0 +1,139 @@
+High-Level Design (HLD)
+The High-Level Design provides a broad overview of the system architecture, components, and interactions between them. It’s useful for understanding the major elements and how they work together.
+
+1. Architecture Diagram
+Include a diagram that illustrates the main components and their interactions. Here’s an overview you could create in a diagramming tool (like Lucidchart or Draw.io):
+
+Frontend (React.js): Manages the user interface, handles file uploads, and provides an interface for querying documents.
+Backend (FastAPI): Acts as the server for handling API requests, managing business logic, and connecting the frontend with the NLP, document storage, and database.
+File Storage (AWS S3): Stores uploaded documents, making them accessible to the backend and NLP processing.
+NLP Processing (LangChain or LlamaIndex): Performs NLP tasks, particularly for indexing document content and answering user queries.
+Database (PostgreSQL & Redis):
+PostgreSQL stores structured data, such as user details, document metadata, and logs.
+Redis is used for caching to enhance retrieval performance.
+Search Engine (Elasticsearch): Provides fast and accurate querying capabilities, especially useful for large document collections.
+Orchestration (Docker & Kubernetes): Containerizes and orchestrates services, allowing for easy deployment, scaling, and management.
+2. Component Descriptions
+Each component has a specific role:
+
+Frontend (React.js):
+
+Purpose: Enables users to upload documents and query them via a user-friendly interface.
+Responsibilities: Manages API calls, handles file uploads, and displays responses from the backend.
+Backend (FastAPI):
+
+Purpose: The central controller that processes user requests, authenticates users, and coordinates with NLP processing and database storage.
+Responsibilities:
+User authentication and session management
+File handling and metadata storage
+Document indexing and querying with the NLP module
+API endpoints for document management
+File Storage (AWS S3):
+
+Purpose: Store uploaded documents for scalable access and retrieval.
+Responsibilities: Persistent storage for files with high availability and durability.
+NLP Processing (LangChain or LlamaIndex):
+
+Purpose: Index and interpret document content to allow for context-aware user queries.
+Responsibilities: Efficiently retrieve relevant document information and generate accurate answers based on document content.
+Database (PostgreSQL & Redis):
+
+Purpose: Maintain structured data and manage caching for optimal performance.
+Responsibilities:
+PostgreSQL: Persist user and document metadata.
+Redis: Provide caching for faster data retrieval.
+Search Engine (Elasticsearch):
+
+Purpose: Enhance search capability with high-speed indexing and querying.
+Responsibilities: Allow for keyword-based document retrieval.
+Orchestration (Docker & Kubernetes):
+
+Purpose: Ensure smooth deployment, scaling, and management of services.
+Responsibilities: Containerize services and manage resource allocation.
+Low-Level Design (LLD)
+The Low-Level Design provides more detailed information about the database schema, specific classes, methods, and interactions.
+
+1. Database Schema Design
+Here’s an example of the database schema, including tables and relationships:
+
+Users Table:
+
+Columns: id, username, password_hash, created_at
+Purpose: Store user data with secure authentication.
+Documents Table:
+
+Columns: id, user_id, title, file_url, content_summary, created_at
+Purpose: Store metadata for each document uploaded by a user.
+Relationship: Foreign key to Users (one-to-many).
+Queries Table:
+
+Columns: id, user_id, document_id, query_text, response_text, timestamp
+Purpose: Log user queries and responses for history tracking and potential analytics.
+Relationships: Foreign keys to Users and Documents.
+2. Class Design
+The application may include the following primary classes:
+
+User Class:
+
+Attributes: id, username, password_hash
+Methods:
+register_user(): Handles new user registration.
+authenticate_user(): Verifies user credentials for login.
+Document Class:
+
+Attributes: id, user_id, title, file_url, content_summary
+Methods:
+upload_document(): Manages file upload to S3 and stores metadata.
+parse_content(): Extracts document text for NLP processing.
+Query Class:
+
+Attributes: id, user_id, document_id, query_text, response_text
+Methods:
+generate_response(): Calls NLP processing and RAG agent to answer user queries.
+log_query(): Stores query and response in the database.
+3. Data Flow and Interactions
+User Registration and Login:
+
+The user registers or logs in, triggering authentication processes that validate credentials against the Users table.
+Document Upload:
+
+User uploads a document via the frontend.
+The backend stores it on AWS S3, generates metadata, and saves it in the Documents table.
+Document Parsing and Indexing:
+
+Upon upload, parse_content() extracts the text content and indexes it using LangChain/LlamaIndex for efficient query retrieval.
+Query Execution:
+
+When a user submits a query, generate_response() retrieves the relevant document content using RAG agents and Elasticsearch.
+The response is generated and sent to the frontend for display.
+The query and response are stored in the Queries table for future reference.
+Document Layout for HLD/LLD
+Here’s an outline for a design document you could use to present this information effectively:
+
+Title: Document Management System with NLP Querying - HLD/LLD
+Introduction
+
+Overview of the project, its goals, and the main functionalities.
+High-Level Design (HLD)
+
+System Architecture Diagram
+Component Descriptions
+Data Flow Diagram: A simple flowchart illustrating user interactions from registration, document upload, to querying.
+Low-Level Design (LLD)
+
+Database Schema
+ERD Diagram
+Table details with primary keys, foreign keys, and relationships.
+Class Diagrams and Methods
+UML Class Diagrams for major classes (User, Document, Query).
+Details of key methods and their purposes.
+Data Flow and Interactions
+Sequence diagrams showing interactions for key functionalities, like document upload and query processing.
+Deployment and Scalability Considerations
+
+Containerization: Brief on Docker setup.
+Kubernetes Orchestration: How Kubernetes is used for scaling.
+Performance and Monitoring: Description of monitoring tools (Prometheus, Grafana).
+Future Enhancements
+
+Potential improvements like adding more document formats, enhancing NLP processing, and improving search accuracy.
