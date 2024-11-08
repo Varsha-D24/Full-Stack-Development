@@ -1,0 +1,11 @@
+├── app
+│   ├── main.py
+│   ├── config.py
+│   ├── models.py
+│   ├── database.py
+│   ├── crud.py
+│   ├── auth.py
+│   └── utils.py
+├── Dockerfile
+├── requirements.txt
+└── docker-compose.yml
