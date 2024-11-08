@@ -1,0 +1,52 @@
+
+---
+
+### Additional Files to Include in Your Repository
+
+- **`CONTRIBUTING.md`**: Outlines contribution guidelines.
+  ```markdown
+  # Contributing to Document Management System with NLP Querying
+
+  We welcome contributions! Here’s how you can help:
+  - **Report Issues**: Identify bugs and propose features.
+  - **Submit Pull Requests**: Fork the repo, make changes, and open a pull request.
+  - **Code of Conduct**: Be respectful and constructive.
+
+  ## Setting Up Your Development Environment
+
+  1. Fork and clone the repository.
+  2. Follow the setup instructions in the README.
+  3. Run tests to verify your changes.
+Deployment and API Documentation
+
+docs/api-documentation.md: Detail all endpoints, request methods, and example responses.
+docs/deployment-guide.md: Write detailed steps for deploying the application on both Docker and Kubernetes.
+Architecture Diagram
+
+Use a diagramming tool to create and upload a file named docs/architecture-diagram.png with an illustration of your system's components.
+GitHub Actions Workflow:
+
+Add a .github/workflows/ci.yml file for CI/CD
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Run tests
+      run: pytest
