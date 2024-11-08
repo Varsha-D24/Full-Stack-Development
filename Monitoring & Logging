@@ -1,0 +1,2 @@
+Prometheus & Grafana: For performance monitoring, follow the instructions in monitoring/prometheus-grafana-setup.md.
+ELK Stack: For logging, configure the ELK stack following monitoring/elk-setup.md.
