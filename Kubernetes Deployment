@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: document-manager
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: document-manager
+  template:
+    metadata:
+      labels:
+        app: document-manager
+    spec:
+      containers:
+      - name: document-manager
+        image: document-manager:latest
+        ports:
+        - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: document-manager
+spec:
+  selector:
+    app: document-manager
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+  type: LoadBalancer
